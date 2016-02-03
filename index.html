@@ -1,0 +1,351 @@
+  <head>
+
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        
+</head>
+        <body>
+<div class="showcase__section" id="bubble">
+  <div class="spacer --small"></div>
+  <div id="plots">
+    <div class="bubbleplot" data-num="0">
+      <div class="plot" id="plotdiv"></div>
+      <div class="control-row" style:>
+       <strong> Search Topic: </strong><br><select class="keywordHitsData">
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<style >
+
+
+.modebar{
+  display: none;
+}
+
+.control-row
+{
+ position:absolute;
+ top:20px;
+ margin-left: 30px;
+}
+.ygrid {
+
+  stroke-width:0px;
+}
+
+.xgrid {
+
+  stroke-width:0px;
+}
+
+.crisp{
+
+  stroke-width:0px;
+}
+.point{
+  color:rgb(31, 119, 180);
+
+
+}
+.trace-scatter{
+
+  stroke:rgb(255, 119, 180);
+}
+
+
+</style>
+      
+<script>
+          Plotly.d3.csv('https://raw.githubusercontent.com/ssaravan226/random/master/words_data.csv', function(err, rows){
+    function unpack(rows, key) {
+        return rows.map(function(row) { return row[key]; });
+    }
+
+
+    
+var allKeywords = unpack(rows, 'searchtopic'),
+    allPeriods = unpack(rows, 'period'),
+    allHits = unpack(rows, 'numhits'),
+    listofKeywords = [],
+    currentKeyword,
+    numOfHits = [],
+    selectedPeriod = [];
+
+  for (var i = 0; i < allKeywords.length; i++ ){
+    if (listofKeywords.indexOf(allKeywords[i]) === -1 ){
+      listofKeywords.push(allKeywords[i]);
+    }
+  }
+  
+  function populateKeywordData(Keyword_selected) {
+    numOfHits = [];
+    selectedPeriod = [];
+    for (var i = 0 ; i < allKeywords.length ; i++){
+      if ( allKeywords[i] === Keyword_selected ) {
+        numOfHits.push(allHits[i]);
+        selectedPeriod.push(allPeriods[i]);
+      } 
+    }
+  };
+
+
+setPlot('java');
+  
+function setPlot(Keyword_selected) {                // dropdown
+    populateKeywordData(Keyword_selected);  
+
+    var trace1 = {
+      x: selectedPeriod,
+      y: numOfHits,
+      mode: 'lines+markers',
+      marker: {
+        size: 12, 
+        opacity: 0.5
+      }
+    };
+
+    var data = [trace1];
+
+    var layout = {
+      title: 'Number of hits for popular search topic : <br><b>'+ Keyword_selected.toUpperCase() +'</b><br> over 2 years(8 periods)',
+      xaxis: {title: 'Time Periods'},
+      yaxis: { title: 'Number of Hits for selected topic'}
+  
+    };
+
+    Plotly.newPlot('plotdiv', data, layout);
+};
+
+  
+var innerContainer = document.querySelector('[data-num="0"'),
+    plotEl = innerContainer.querySelector('.plot'),
+    keywordSelector = innerContainer.querySelector('.keywordHitsData');
+
+function assignOptions(textArray, selector) {
+  for (var i = 0; i < textArray.length;  i++) {
+      var currentOption = document.createElement('option');
+      currentOption.text = textArray[i];
+      selector.appendChild(currentOption);
+  }
+}
+
+assignOptions(listofKeywords, keywordSelector);
+
+function newKeyword(){
+    setPlot(keywordSelector.value);
+}
+
+
+  
+keywordSelector.addEventListener('change', newKeyword, false);
+});
+  d3.selectAll("div")
+      .classed("modebar", false);
+
+        </script>
+
+<div>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      var data;
+
+      function drawChart(value) {
+
+     
+if(value==1||value==2||value==3){
+  d3.select('#piechart').remove();
+d3.select('#chart').append('div').attr('id','piechart');
+
+  }
+var data;
+
+        if(value=='1'){ data = google.visualization.arrayToDataTable([
+                        ['Keyword', 'Hits'],
+                        ['Java',     59],
+                        ['Class',      17],
+                        ['Sort',  0.1],
+                        ['Array', 23],
+                        ['String',    14],
+                        ['Method', 15],
+                        ['Errors and Exceptions', 1],
+                        ['Collections', 4],
+                        ['OOPS', 6]
+
+                     ]); }
+          else if(value=='2') { data = google.visualization.arrayToDataTable([
+                        ['Keyword', 'Hits'],
+                        ['Java',     18],
+                        ['Class',      19],
+                        ['Sort',  0.1],
+                        ['Array', 0.1],
+                        ['String',    12],
+                        ['Method', 19],
+                        ['Errors and Exceptions', 2],
+                        ['Collections', 0.1],
+                        ['OOPS', 9]
+
+                     ]);}
+          else if(value=='3'){ data = google.visualization.arrayToDataTable([
+                        ['Keyword', 'Hits'],
+                        ['Java',     54],
+                        ['Class',      13],
+                        ['Sort',  0.1],
+                        ['Array', 5],
+                        ['String',    21],
+                        ['Method', 8],
+                        ['Errors and Exceptions', 3],
+                        ['Collections', 1],
+                        ['OOPS', 15]
+
+                     ]);}
+          else if(value=='4') { data = google.visualization.arrayToDataTable([
+                        ['Keyword', 'Hits'],
+                        ['Java',     8],
+                        ['Class',      3],
+                        ['Sort',  0.1],
+                        ['Array', 1],
+                        ['String',    1],
+                        ['Method', 0.1],
+                        ['Errors and Exceptions', 0.1],
+                        ['Collections', 9],
+                        ['OOPS', 0.1]
+
+                     ]);}
+          else if(value=='5'){ data = google.visualization.arrayToDataTable([
+                        ['Keyword', 'Hits'],
+                        ['Java',     17],
+                        ['Class',      2],
+                        ['Sort',  0.1],
+                        ['Array', 4],
+                        ['String',    5],
+                        ['Method', 2],
+                        ['Errors and Exceptions', 0.1],
+                        ['Collections', 15],
+                        ['OOPS', 3]
+
+                     ]);}
+          else if(value=='6') { data = google.visualization.arrayToDataTable([
+                        ['Keyword', 'Hits'],
+                        ['Java',     58],
+                        ['Class',      7],
+                        ['Sort',  80],
+                        ['Array', 56],
+                        ['String',    6],
+                        ['Method', 10],
+                        ['Errors and Exceptions', 6],
+                        ['Collections', 31],
+                        ['OOPS', 6]
+
+                     ]);}
+          else if(value=='7'){ data = google.visualization.arrayToDataTable([
+                        ['Keyword', 'Hits'],
+                        ['Java',     7],
+                        ['Class',      0.1],
+                        ['Sort',  1],
+                        ['Array', 5],
+                        ['String',    3],
+                        ['Method', 1],
+                        ['Errors and Exceptions', 1],
+                        ['Collections', 1],
+                        ['OOPS', 2]
+
+                     ]);}
+          else if(value=='8') { data = google.visualization.arrayToDataTable([
+                        ['Keyword', 'Hits'],
+                        ['Java',     10],
+                        ['Class',      1],
+                        ['Sort',  3],
+                        ['Array', 8],
+                        ['String',    6],
+                        ['Method', 2],
+                        ['Errors and Exceptions', 0.1],
+                        ['Collections', 4],
+                        ['OOPS', 0.1]
+
+                     ]);}
+          else { data = google.visualization.arrayToDataTable([
+                        ['Keyword', 'Hits'],
+                        ['Java',     59],
+                        ['Class',      17],
+                        ['Sort',  0.1],
+                        ['Array', 23],
+                        ['String',    14],
+                        ['Method', 15],
+                        ['Errors and Exceptions', 1],
+                        ['Collections', 4],
+                        ['OOPS', 6]
+
+                     ]); }
+
+        
+        var options = {
+          title: 'Comparison of search topics based on time period',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+    <div id = "chart">
+    <div id="piechart" >
+    </div>
+  
+</div>
+
+<div>
+  <p><strong>Select the period to view its popular topics</strong></p>
+<input type="radio" id="ddl" name="ddl" value='1' checked="checked" onchange="drawChart(this.value);">&nbsp;Period&nbsp;1&nbsp;&nbsp;</input>
+<input type="radio" id="ddl" name="ddl" value='2' onchange="drawChart(this.value);">&nbsp;Period&nbsp;2&nbsp;&nbsp;  </input>
+<input type="radio" id="ddl" name="ddl" value='3' onchange="drawChart(this.value);">&nbsp;Period&nbsp;3&nbsp;&nbsp;  </input>
+<input type="radio" id="ddl" name="ddl" value='4' onchange="drawChart(this.value);">&nbsp;Period&nbsp;4&nbsp;&nbsp;  </input>
+<input type="radio" id="ddl" name="ddl" value='5' onchange="drawChart(this.value);">&nbsp;Period&nbsp;5&nbsp;&nbsp;  </input>
+<input type="radio" id="ddl" name="ddl" value='6' onchange="drawChart(this.value);">&nbsp;Period&nbsp;6&nbsp;&nbsp;  </input>
+<input type="radio" id="ddl" name="ddl" value='7' onchange="drawChart(this.value);">&nbsp;Period&nbsp;7&nbsp;&nbsp;  </input>
+<input type="radio" id="ddl" name="ddl" value='8' onchange="drawChart(this.value);">&nbsp;Period&nbsp;8&nbsp;&nbsp;  </input>
+
+
+</div>
+<div id="findings">
+  <h3><u> Findings And Inferences from the visualization : </u></h3>
+
+  <ul>
+  <li><strong> Finding-1:&nbsp;</strong><p>Java has always been a popular query topic over the entire period of 2 years(8 periods) that were taken from the dataset provided.<br> This is considered important so that we can improve the quality of java content and associated pages.</p></li>
+  <li><strong> Finding-2:&nbsp;</strong><p>Sorting saw a sudden peak in hits in the 6th quarter. This seems to be an anomoly in the entire search space.<br> This could be assumed to be because users found java's basic questions answered and came back for complex topics such as sorting.</p></li>
+  <li><strong> Finding-3:&nbsp;</strong><p>The number of hits for OOPS related concepts(keywords such as Polymorphism, Inheritance,etc.) are periodic.They increase and decrease alternatively during every other period. <br> This is considered important because we could have a user feedback mechanism to assess the quality of content available during the peak periods. This feedback can be efficiently utilized as a checkpoint.<p>
+</li>
+</ul>
+  </div>
+<div id="explanation">
+  <h3> <u>Explanation : </u></h3>
+  <p><strong>Dataset Considered:</strong><br>class_query.csv</p>
+  <p><strong> Variables Used:</strong><br>Timestamp, Query Topic, User IDs</p>
+  <p><strong>Steps followed:</strong><br> Using the dataset considered, I have presented two visualizations consisting of 3 findings and 3 interactions with the dataset. In the first plot that is generated, the X-Axis is the range of time-periods considered and the Y-Axis is the Number of Hits that each search topic has obtained. The time period that is considered from the dataset is a 2 year period which has been divided into 8 periods. The search topics that I have considered have been retrieved from the dataset by analyzing popular keywords. I have also performed content grouping on the keywords-for example, keywords like Inheritance, Polymorphism,Objects have been grouped together as OOPS concepts.
+  </p> 
+  <p><h3><u>Visualizations :</u> </h3></p>
+  <p><strong>Visualization 1:</strong><br>The first visualization has been represented in the form of a plot. It presents the trend of popularity increase/decrease of a given search topic in all the time periods considered.</p>
+  <p><strong>Visualization 2:</strong><br>The second visualization has been represented in the form of a 3D piechart. It shows the popularity of all the search topics considered in a particular time period. </p>
+  
+  <p><h3><u>Interactions : </u></h3></p>
+  <p><strong>Interaction 1:</strong><br>The search topic needs to be selected from the drop-down box at the top of the page inorder to populate the popularity of the selected topic in that time period. The drop-down box communicates with the dataset to find this.
+</p>
+  <p><strong>Interaction 2:</strong><br>The time period needs to be selected from the list of radio buttons presented on the screen. On selecting a particular time period, the most popular search topics in that time period are retrieved from the dataset.  </p>
+  <p><strong>Interaction 3:</strong><br>On hovering over each of the slices of the piechart, we can see the number of hits each topic has received. This data is also retrieved from the dataset. </p>
+
+
+</div>
+<div id="references">
+  <h3> <u> References: </u> </h3>
+  <ol>
+
+    <li>https://google-developers.appspot.com/chart/interactive/docs/gallery/piechart </li>
+    <li>https://plot.ly/javascript/high-dimension-data/ </li>
+        </body>
